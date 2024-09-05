@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tambola/common/resources.dart';
 import 'package:tambola/screens/welcome_screen.dart';
 
 void main() {
@@ -15,6 +16,7 @@ class TambolaApp extends StatelessWidget {
     builder: (_,child){
       return MaterialApp(
         home: child,
+        theme: Resources.lightThemeData,
       );
     },
     child: const WelcomeScreen(),);
