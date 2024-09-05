@@ -83,14 +83,16 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     Object? result = await showGeneralDialog(context: context,
         transitionBuilder: (context,anim1,anim2,child){
            return BackdropFilter(filter:
-           ImageFilter.blur(sigmaX: 3,sigmaY: 3,),
-             child: Wrap(children: [
-               Transform.scale(
-                 scaleX: anim1.value,
-                 scaleY: anim1.value,
-                 child: child,
-               )
-             ],),
+           ImageFilter.blur(sigmaX: 11,sigmaY: 11,),
+             child: Center(
+               child: Wrap(children: [
+                 Transform.scale(
+                   scaleX: anim1.value,
+                   scaleY: anim1.value,
+                   child: child,
+                 )
+               ],),
+             ),
            );
         }, pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
            return child;

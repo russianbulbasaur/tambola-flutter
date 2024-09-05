@@ -15,8 +15,9 @@ class TambolaApp extends StatelessWidget {
     return ScreenUtilInit(designSize: const Size(930,640),
     builder: (_,child){
       return MaterialApp(
-        home: child,
         theme: Resources.lightThemeData,
+        initialRoute: "/",
+        onGenerateRoute: Resources.route,
       );
     },
     child: const WelcomeScreen(),);

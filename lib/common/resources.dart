@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tambola/screens/waiting_for_players_screen.dart';
+import 'package:tambola/screens/welcome_screen.dart';
 
 class Resources{
   static ThemeData lightThemeData = ThemeData(
@@ -14,4 +16,17 @@ class Resources{
 
   //server url
   static String url = "";
+
+  static Route route(RouteSettings settings){
+    switch(settings.name){
+      case "/":
+        return MaterialPageRoute(builder:(context){
+          return const WelcomeScreen();
+        });
+      default:
+        return MaterialPageRoute(builder: (context){
+          return const WelcomeScreen();
+        });
+    }
+  }
 }
