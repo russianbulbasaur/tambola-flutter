@@ -15,7 +15,7 @@ class Resources{
   );
 
   //server url
-  static String url = "";
+  static String ipPort = "192.168.31.6:8000";
 
   static Route route(RouteSettings settings){
     switch(settings.name){

@@ -25,10 +25,9 @@ class _WaitingForPlayersScreenState extends State<WaitingForPlayersScreen> {
 
   void what() async{
     GameRepository repo = GameRepository();
-    StreamController test = StreamController();
-    repo.monitorGame(test);
-    test.stream.listen((data){
-      print(data.toString());
+    Game game = await repo.createGame();
+    game.socketStream!.listen((data){
+      print(data);
     });
   }
 
