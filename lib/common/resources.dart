@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tambola/screens/waiting_for_players_screen.dart';
 import 'package:tambola/screens/welcome_screen.dart';
 
+import '../models/user.dart';
+
 class Resources{
+  static User? user;
+
   static ThemeData lightThemeData = ThemeData(
     primaryColor: Colors.white,
     dialogBackgroundColor: const Color(0xff2c282e),

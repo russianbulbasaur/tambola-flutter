@@ -4,7 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tambola/blocs/host_game_blocs/create_game_bloc.dart';
 import 'package:tambola/common/app_button.dart';
 import 'package:tambola/repositories/game_respository/game_repository.dart';
-import 'package:tambola/screens/waiting_for_players_screen.dart';
+import 'package:tambola/screens/arena/host_board_screen.dart';
+
+import '../common/resources.dart';
+import '../models/user.dart';
 
 class CreateGameDialog extends StatefulWidget {
   const CreateGameDialog({super.key});
@@ -43,7 +46,8 @@ class _CreateGameDialogState extends State<CreateGameDialog> {
     return BlocConsumer<CreateGameBloc,CreateGameBlocResponse?>(
     listener: (context,state){
       Navigator.push(context, MaterialPageRoute(builder: (context){
-        return WaitingForPlayersScreen(game: state!.game!,);
+        Resources.user!.type = UserType.host;
+        return HostBoardScreen(game: state!.game!);
       }));
     },listenWhen: (prev,curr) => (curr!=null && curr.game!=null)
     ,builder: (context,state){

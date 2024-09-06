@@ -1,3 +1,0 @@
-class GameStateParserBloc{
-  void parse(){}
-}

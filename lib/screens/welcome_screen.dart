@@ -3,8 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tambola/common/app_button.dart';
+import 'package:tambola/common/resources.dart';
 import 'package:tambola/dialogs/create_game_dialog.dart';
-import 'package:tambola/dialogs/game_code_dialog.dart';
+import 'package:tambola/dialogs/join_game_dialog.dart';
+import 'package:tambola/dialogs/name_dialog.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -67,16 +69,37 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         AppButton(size: Size(MediaQuery.of(context).size.width,35.h),
             backgroundColor:Theme.of(context).secondaryHeaderColor,
             child: const Text("Create Game"),
-            onPressed: () => createDialog(const CreateGameDialog())),
+            onPressed: () => initUserDialog(const CreateGameDialog())),
         SizedBox(height: 10.h,),
         AppButton(size: Size(MediaQuery.of(context).size.width,35.h),
             backgroundColor:Theme.of(context).primaryColorDark,
             child: const Text("Join Game"),
-            onPressed: () => createDialog(const GameCodeDialog())),
+            onPressed: () => initUserDialog(const JoinGameDialog())),
         SizedBox(height: 30.h,),
         footerText()
       ],),
     );
+  }
+
+  void initUserDialog(Widget child) async{
+    await showGeneralDialog(context: context,
+        transitionBuilder: (context,anim1,anim2,child){
+          return BackdropFilter(filter:
+          ImageFilter.blur(sigmaX: 11,sigmaY: 11,),
+            child: Center(
+              child: Wrap(children: [
+                Transform.scale(
+                  scaleX: anim1.value,
+                  scaleY: anim1.value,
+                  child: const NameDialog(),
+                )
+              ],),
+            ),
+          );
+        }, pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+          return child;
+        });
+    if(Resources.user!=null) createDialog(child);
   }
 
   void createDialog(Widget child) async{

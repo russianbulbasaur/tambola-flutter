@@ -1,8 +1,10 @@
+import 'dart:math';
+
 import 'package:tambola/models/user.dart';
 
 class UserRepository{
 
   User createUser(){
-    return User();
+    return User(Random().nextInt(1000000),"");
   }
 }
