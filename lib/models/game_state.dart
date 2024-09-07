@@ -34,6 +34,13 @@ class GameState{
   void addAlert(String alert){
     alerts.add(alert);
   }
+
+  void initState(List decodePlayersInLobbyPayload) {
+    players = (decodePlayersInLobbyPayload[1] as List).map((e) => User.fromMap(e)).toList();
+    game!.id = decodePlayersInLobbyPayload[0] as int;
+    print(game!.id);
+    print(players);
+  }
 }
 
 enum GameStatus{

@@ -10,19 +10,17 @@ class Game{
   final Stream socketStream;
   final WebSocketSink socketSink;
   Function(dynamic)? listener;
-  Game(this.id,this.state,this.socketStream,this.socketSink){
+  Game(this.id,this.state,this.socketStream,this.socketSink);
+
+
+  void listen(){
     socketStream.listen((data){
       if(listener==null) return;
       listener!(data);
     });
   }
 
-
-  void attachListener(Function(dynamic) function){
+  void setListener(Function(dynamic) function){
     listener = function;
-  }
-
-  void removeListener(){
-    listener = null;
   }
 }

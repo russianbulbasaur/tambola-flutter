@@ -20,13 +20,9 @@ class CreateGameBloc extends Cubit<CreateGameBlocResponse?>{
     try{
       Game game = await gameRepository.createGame();
       response.game = game;
-    } on WebSocketException catch(e) {
-      if(kDebugMode) print(e.message);
-      response.exception = e as Exception?;
-    }catch(e){
+    } catch(e){
       if(kDebugMode) print(e.toString());
-    }
-    finally{
+    }finally{
       emit(response);
     }
   }

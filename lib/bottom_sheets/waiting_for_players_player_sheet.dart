@@ -15,41 +15,18 @@ class WaitingForPlayersPlayerSheet extends StatefulWidget {
 }
 
 class _WaitingForPlayersPlayerSheetState extends State<WaitingForPlayersPlayerSheet> {
-  late Monitor monitor;
   @override
   void initState() {
-    monitor = Monitor(0,widget.game.state);
-    socketListener();
     super.initState();
   }
 
-  void socketListener(){
-    widget.game.attachListener((data){
-      monitor.parse(data);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(create: (context) => monitor,
-        child: BlocConsumer<Monitor,int>(
-          listener: (context,state){
-            if(widget.game.state.status==GameStatus.playing) {
-              if (context.mounted) {
-                widget.game.removeListener();
-                monitor.close();
-                Navigator.pop(context);
-              }
-            }
-          },
-          builder: (context,state){
-            return ListView.builder(itemBuilder: (context,index){
-              return playerTile(widget.game.state.players[index]);
-            },itemCount: widget.game.state.players.length,);
-          },
-        ),
-      ),
+      body: ListView.builder(itemBuilder: (context,index){
+        return playerTile(widget.game.state.players[index]);
+      },itemCount: widget.game.state.players.length,)
     );
   }
 

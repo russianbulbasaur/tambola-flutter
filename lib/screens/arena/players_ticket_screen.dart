@@ -26,14 +26,14 @@ class _PlayersTicketScreenState extends State<PlayersTicketScreen> {
   }
 
   void waitForPlayers() async{
-    Object? result = await showModalBottomSheet(context: context, builder:(context){
+    showModalBottomSheet(context: context, builder:(context){
       return WaitingForPlayersPlayerSheet(game: widget.game);
     });
     monitorGame();
   }
 
   void monitorGame() async{
-    widget.game.attachListener((data){
+    widget.game.setListener((data){
       _monitor.parse(data);
     });
   }

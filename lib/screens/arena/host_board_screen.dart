@@ -12,6 +12,8 @@ import 'package:tambola/common/resources.dart';
 import 'package:tambola/models/game.dart';
 import 'package:tambola/models/user.dart';
 
+import '../../blocs/core_game_blocs/monitor.dart';
+
 class HostBoardScreen extends StatefulWidget {
   final Game game;
   const HostBoardScreen({super.key,required this.game});
@@ -21,9 +23,13 @@ class HostBoardScreen extends StatefulWidget {
 }
 
 class _HostBoardScreenState extends State<HostBoardScreen> {
+  late Monitor _monitor;
   late HashSet<int> bag;
+
+
   @override
   void initState() {
+    _monitor = Monitor(0, widget.game.state);
     bag = HashSet();
     bag.addAll(List.generate(90, (index) => index+1));
     Future.delayed(const Duration(seconds: 1),waitForPlayers);
@@ -31,9 +37,17 @@ class _HostBoardScreenState extends State<HostBoardScreen> {
   }
 
   void waitForPlayers() async{
-    Object? result = await showModalBottomSheet(context: context, builder:(context){
+    showModalBottomSheet(context: context, builder:(context){
       return WaitingForPlayersHostSheet(game: widget.game);
     });
+    monitorGame();
+  }
+
+  void monitorGame() async{
+    widget.game.setListener((data){
+      _monitor.parse(data);
+    });
+    widget.game.listen();
   }
 
 

@@ -12,9 +12,9 @@ class BeginGameBloc extends Cubit<bool>{
 
   void start(Game game){
     Message message = Message(Random().nextInt(100000),
-        Events.game_status, Resources.user!, jsonEncode(
+        Events.game_status, Resources.user!,
           {"status":GameStatus.playing.name}
-        ));
+        );
     game.socketSink.add(message.toJson());
   }
 }

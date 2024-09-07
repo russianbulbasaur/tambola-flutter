@@ -14,9 +14,9 @@ class CallNumberBloc extends Cubit<int>{
   void call(int number,Game game){
     Message message = Message(Random().nextInt(1000000),
         Events.number_called, Resources.user!
-        , jsonEncode({
+        , {
           "number" : number
-        }));
+        });
     game.socketSink.add(message.toJson());
     emit(number);
   }
