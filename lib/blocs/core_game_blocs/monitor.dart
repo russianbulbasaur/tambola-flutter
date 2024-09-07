@@ -5,10 +5,22 @@ import 'package:tambola/models/game_state.dart';
 import 'package:tambola/models/message.dart';
 import 'dart:developer' as dev;
 
-class Monitor extends Cubit<int>{
-  final GameState gameState;
-  Monitor(super.initialState,this.gameState);
+import 'package:tambola/models/user.dart';
 
+class Monitor extends Bloc<GameEvent,GameBlocState>{
+  final GameState gameState;
+  Monitor(super.initialState,this.gameState){
+    on<NumberCalledEvent>(onNumberCalled);
+    on<UserJoinedEvent>(onUserJoined);
+    on<GameStatusChangedEvent>(gameStateChanged);
+  }
+
+
+  void onNumberCalled(NumberCalledEvent event,emit) => emit(NumberCalledState());
+
+  void onUserJoined(UserJoinedEvent event,emit) => emit(UserJoinedState());
+
+  void gameStateChanged(GameStatusChangedEvent event,emit) => emit(GameStatusChangedState());
 
   void parse(dynamic data){
     if(kDebugMode) dev.log(data);
@@ -21,6 +33,7 @@ class Monitor extends Cubit<int>{
           break;
         case Events.user_joined:
           gameState.addPlayer(message.decodePlayerPayload());
+          add(UserJoinedEvent());
           break;
         case Events.user_left:
           break;
@@ -28,14 +41,33 @@ class Monitor extends Cubit<int>{
           break;
         case Events.number_called:
           gameState.addNumber(message.decodeNumberPayload());
+          add(NumberCalledEvent());
           break;
         case Events.game_status:
           gameState.updateStatus(message.decodeStatusPayload());
+          add(GameStatusChangedEvent());
           break;
       }
     }catch(e){
       if(kDebugMode) dev.log(e.toString());
     }
-    emit(Random().nextInt(1000000));
   }
 }
+
+abstract class GameEvent{}
+
+class GameStatusChangedEvent extends GameEvent{}
+
+class NumberCalledEvent extends GameEvent{}
+
+class UserJoinedEvent extends GameEvent{}
+
+abstract class GameBlocState{}
+
+class NumberCalledState extends GameBlocState{}
+
+class UserJoinedState extends GameBlocState{}
+
+class GameStatusChangedState extends GameBlocState{}
+
+class WaitingState extends GameBlocState{}

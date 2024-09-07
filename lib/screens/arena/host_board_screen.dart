@@ -29,7 +29,7 @@ class _HostBoardScreenState extends State<HostBoardScreen> {
 
   @override
   void initState() {
-    _monitor = Monitor(0, widget.game.state);
+    _monitor = Monitor(WaitingState(), widget.game.state);
     bag = HashSet();
     bag.addAll(List.generate(90, (index) => index+1));
     Future.delayed(const Duration(seconds: 1),waitForPlayers);
@@ -38,7 +38,7 @@ class _HostBoardScreenState extends State<HostBoardScreen> {
 
   void waitForPlayers() async{
     showModalBottomSheet(context: context, builder:(context){
-      return WaitingForPlayersHostSheet(game: widget.game);
+      return WaitingForPlayersHostSheet(game: widget.game,monitor: _monitor,);
     });
     monitorGame();
   }

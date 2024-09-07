@@ -20,14 +20,14 @@ class _PlayersTicketScreenState extends State<PlayersTicketScreen> {
   late Monitor _monitor;
   @override
   void initState() {
-    _monitor = Monitor(0, widget.game.state);
+    _monitor = Monitor(WaitingState(), widget.game.state);
     Future.delayed(const Duration(seconds: 1),waitForPlayers);
     super.initState();
   }
 
   void waitForPlayers() async{
     showModalBottomSheet(context: context, builder:(context){
-      return WaitingForPlayersPlayerSheet(game: widget.game);
+      return WaitingForPlayersPlayerSheet(game: widget.game,monitor: _monitor,);
     });
     monitorGame();
   }
@@ -36,12 +36,14 @@ class _PlayersTicketScreenState extends State<PlayersTicketScreen> {
     widget.game.setListener((data){
       _monitor.parse(data);
     });
+    widget.game.listen();
   }
 
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<Monitor,int>(bloc: _monitor,
+    return BlocConsumer<Monitor,GameBlocState>(bloc: _monitor,
+      listener: (context,state){},
       builder: (context,state){
       if(widget.game.state.numbersCalled.length==0) return Container();
         return Center(
@@ -50,7 +52,7 @@ class _PlayersTicketScreenState extends State<PlayersTicketScreen> {
             fontSize: 60.sp
           ),),
         );
-      },
+      },buildWhen: (prev,curr) => curr is NumberCalledState,
     );
   }
 }

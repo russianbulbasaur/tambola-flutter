@@ -7,7 +7,7 @@ class Message{
   final int id;
   final Events event;
   final User sender;
-  final Map payload;
+  final Map<String,dynamic> payload;
   Message(this.id,this.event,this.sender,this.payload);
 
   factory Message.fromJson(String json){
@@ -70,7 +70,7 @@ extension EventFunctions on Events{
       case Events.players_already_in_lobby:
         return "players_already_in_lobby_payload";
       case Events.number_called:
-        return "number_called_payload";
+        return "number_payload";
       case Events.game_status:
         return "game_status_payload";
       case Events.alert:

@@ -12,7 +12,8 @@ import '../blocs/core_game_blocs/monitor.dart';
 
 class WaitingForPlayersHostSheet extends StatefulWidget {
   final Game game;
-  const WaitingForPlayersHostSheet({super.key,required this.game});
+  final Monitor monitor;
+  const WaitingForPlayersHostSheet({super.key,required this.game,required this.monitor});
 
   @override
   State<WaitingForPlayersHostSheet> createState() => _WaitingForPlayersHostSheetState();
@@ -32,9 +33,15 @@ class _WaitingForPlayersHostSheetState extends State<WaitingForPlayersHostSheet>
         children: [
           Text("Game Id : ${widget.game.id}"),
           SizedBox(height: MediaQuery.of(context).size.height/3,
-            child: ListView.builder(itemBuilder: (context,index){
-              return playerTile(widget.game.state.players[index]);
-            },itemCount: widget.game.state.players.length,),
+            child: BlocConsumer<Monitor,GameBlocState>(bloc: widget.monitor,
+              listener: (context,state) => Navigator.pop(context),
+              listenWhen: (prev,curr) => curr is GameStatusChangedState && widget.game.state.status==GameStatus.playing,
+              builder: (context,state){
+                return ListView.builder(itemBuilder: (context,index){
+                  return playerTile(widget.game.state.players[index]);
+                },itemCount: widget.game.state.players.length,);
+              },buildWhen: (prev,curr) => curr is UserJoinedState,
+            ),
           ),
           buttons()
         ],
