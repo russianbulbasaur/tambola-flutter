@@ -20,8 +20,8 @@ doc/api/
 *.js_
 *.js.deps
 *.js.map
+build/
 
 .flutter-plugins
 .flutter-plugins-dependencies
-build/
 !build/web/
