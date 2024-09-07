@@ -7,7 +7,7 @@ import 'package:tambola/models/message.dart';
 
 import '../../models/game.dart';
 
-class CallNumberBloc extends Cubit<bool>{
+class CallNumberBloc extends Cubit<int>{
   CallNumberBloc(super.initialState,);
 
 
@@ -18,6 +18,6 @@ class CallNumberBloc extends Cubit<bool>{
           "number" : number
         }));
     game.socketSink.add(message.toJson());
-    emit(true);
+    emit(number);
   }
 }

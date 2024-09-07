@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tambola/blocs/host_game_blocs/begin_game_bloc.dart';
@@ -26,7 +28,7 @@ class _WaitingForPlayersHostSheetState extends State<WaitingForPlayersHostSheet>
   }
 
   void socketListener(){
-    widget.game.socketStream.listen((data){
+    widget.game.attachListener((data){
       monitor.parse(data);
     });
   }
@@ -40,6 +42,7 @@ class _WaitingForPlayersHostSheetState extends State<WaitingForPlayersHostSheet>
             if(widget.game.state.status==GameStatus.playing){
               if(context.mounted) {
                 monitor.close();
+                widget.game.removeListener();
                 Navigator.pop(context);
               }
             }
@@ -81,6 +84,7 @@ class _WaitingForPlayersHostSheetState extends State<WaitingForPlayersHostSheet>
 
   @override
   void dispose() {
+    widget.game.removeListener();
     monitor.close();
     super.dispose();
   }

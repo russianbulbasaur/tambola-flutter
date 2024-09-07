@@ -6,15 +6,15 @@ import 'package:tambola/models/user.dart';
 
 import '../blocs/core_game_blocs/monitor.dart';
 
-class WaitingForPlayersPlayerScreen extends StatefulWidget {
+class WaitingForPlayersPlayerSheet extends StatefulWidget {
   final Game game;
-  const WaitingForPlayersPlayerScreen({super.key,required this.game});
+  const WaitingForPlayersPlayerSheet({super.key,required this.game});
 
   @override
-  State<WaitingForPlayersPlayerScreen> createState() => _WaitingForPlayersPlayerScreenState();
+  State<WaitingForPlayersPlayerSheet> createState() => _WaitingForPlayersPlayerSheetState();
 }
 
-class _WaitingForPlayersPlayerScreenState extends State<WaitingForPlayersPlayerScreen> {
+class _WaitingForPlayersPlayerSheetState extends State<WaitingForPlayersPlayerSheet> {
   late Monitor monitor;
   @override
   void initState() {
@@ -24,7 +24,7 @@ class _WaitingForPlayersPlayerScreenState extends State<WaitingForPlayersPlayerS
   }
 
   void socketListener(){
-    widget.game.socketStream.listen((data){
+    widget.game.attachListener((data){
       monitor.parse(data);
     });
   }
@@ -35,8 +35,13 @@ class _WaitingForPlayersPlayerScreenState extends State<WaitingForPlayersPlayerS
       body: BlocProvider(create: (context) => monitor,
         child: BlocConsumer<Monitor,int>(
           listener: (context,state){
-            if(widget.game.state.status==GameStatus.playing)
-             if(context.mounted) Navigator.pop(context);
+            if(widget.game.state.status==GameStatus.playing) {
+              if (context.mounted) {
+                widget.game.removeListener();
+                monitor.close();
+                Navigator.pop(context);
+              }
+            }
           },
           builder: (context,state){
             return ListView.builder(itemBuilder: (context,index){
@@ -51,11 +56,5 @@ class _WaitingForPlayersPlayerScreenState extends State<WaitingForPlayersPlayerS
   Widget playerTile(User player){
     return ListTile(title:
     Text(player.name));
-  }
-
-  @override
-  void dispose() {
-    monitor.close();
-    super.dispose();
   }
 }

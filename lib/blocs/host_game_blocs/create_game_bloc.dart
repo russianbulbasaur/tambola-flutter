@@ -23,7 +23,10 @@ class CreateGameBloc extends Cubit<CreateGameBlocResponse?>{
     } on WebSocketException catch(e) {
       if(kDebugMode) print(e.message);
       response.exception = e as Exception?;
-    }finally{
+    }catch(e){
+      if(kDebugMode) print(e.toString());
+    }
+    finally{
       emit(response);
     }
   }
