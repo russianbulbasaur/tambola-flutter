@@ -7,16 +7,18 @@ import 'dart:developer' as dev;
 
 import 'package:tambola/models/user.dart';
 
+import '../../models/game.dart';
+
 class Monitor extends Bloc<GameEvent,GameBlocState>{
-  final GameState gameState;
-  Monitor(super.initialState,this.gameState){
+  final Game game;
+  Monitor(super.initialState,this.game){
     on<NumberCalledEvent>(onNumberCalled);
     on<UserJoinedEvent>(onUserJoined);
     on<GameStatusChangedEvent>(gameStateChanged);
   }
 
 
-  void onNumberCalled(NumberCalledEvent event,emit) => emit(NumberCalledState());
+  void onNumberCalled(NumberCalledEvent event,emit) => emit(NumberCalledState(event.number));
 
   void onUserJoined(UserJoinedEvent event,emit) => emit(UserJoinedState());
 
@@ -28,11 +30,11 @@ class Monitor extends Bloc<GameEvent,GameBlocState>{
       Message message = Message.fromJson(data);
       switch (message.event) {
         case Events.players_already_in_lobby:
-          gameState.initState(message
+          game.state.initState(message
               .decodePlayersInLobbyPayload()); //decodes list of players and gameid
           break;
         case Events.user_joined:
-          gameState.addPlayer(message.decodePlayerPayload());
+          game.state.addPlayer(message.decodePlayerPayload());
           add(UserJoinedEvent());
           break;
         case Events.user_left:
@@ -40,11 +42,12 @@ class Monitor extends Bloc<GameEvent,GameBlocState>{
         case Events.alert:
           break;
         case Events.number_called:
-          gameState.addNumber(message.decodeNumberPayload());
-          add(NumberCalledEvent());
+          int number = message.decodeNumberPayload();
+          game.state.addNumber(number);
+          add(NumberCalledEvent(number));
           break;
         case Events.game_status:
-          gameState.updateStatus(message.decodeStatusPayload());
+          game.state.updateStatus(message.decodeStatusPayload());
           add(GameStatusChangedEvent());
           break;
       }
@@ -58,13 +61,19 @@ abstract class GameEvent{}
 
 class GameStatusChangedEvent extends GameEvent{}
 
-class NumberCalledEvent extends GameEvent{}
+class NumberCalledEvent extends GameEvent{
+  final int number;
+  NumberCalledEvent(this.number);
+}
 
 class UserJoinedEvent extends GameEvent{}
 
 abstract class GameBlocState{}
 
-class NumberCalledState extends GameBlocState{}
+class NumberCalledState extends GameBlocState{
+  final int number;
+  NumberCalledState(this.number);
+}
 
 class UserJoinedState extends GameBlocState{}
 
