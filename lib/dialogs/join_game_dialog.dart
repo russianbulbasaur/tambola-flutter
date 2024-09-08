@@ -23,6 +23,7 @@ class _JoinGameDialogState extends State<JoinGameDialog> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom),
       decoration: BoxDecoration(color: Theme.of(context).dialogBackgroundColor),
       height: MediaQuery.of(context).size.height/3,
       child: dialogContent(),

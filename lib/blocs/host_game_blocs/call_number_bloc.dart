@@ -18,6 +18,7 @@ class CallNumberBloc extends Cubit<int>{
           "number" : number
         });
     game.socketSink.add(message.toJson());
+    game.state.addNumber(number);
     emit(number);
   }
 }

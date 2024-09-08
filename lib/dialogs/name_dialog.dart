@@ -20,6 +20,7 @@ class _NameDialogState extends State<NameDialog> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom),
       decoration: BoxDecoration(color: Theme.of(context).dialogBackgroundColor),
       height: MediaQuery.of(context).size.height/3,
       child: dialogContent(),

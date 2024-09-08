@@ -8,6 +8,8 @@ class GameState{
   List<User> players;
   List<int> numbersCalled;
   Game? game;
+  int called = 0;
+  int previousCalled = 0;
   GameState(this.status,this.alerts,this.players,this.numbersCalled);
 
 
@@ -21,6 +23,8 @@ class GameState{
 
   void addNumber(int number){
     numbersCalled.add(number);
+    previousCalled = called;
+    called = number;
   }
 
   void deleteNumber(int number){
