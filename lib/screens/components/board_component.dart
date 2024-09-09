@@ -19,12 +19,10 @@ class BoardComponent extends StatelessWidget {
 
   Widget boardWidget(){
     return Column(crossAxisAlignment: CrossAxisAlignment.center,
-      children: [1,2,3,4,5,6,7,8,9].map((e){
-      int startIndex = 10*(e-1);
-      return Row(mainAxisAlignment: MainAxisAlignment.center,
-          children:[0,1,2,3,4,5,6,7,8,9].map((index) =>
-          numberTile(board.tiles[startIndex+index])).toList());
-    }).toList(),);
+      children: board.tiles.map((rowList){
+        return Row(mainAxisAlignment: MainAxisAlignment.center,
+        children: rowList.map((tile) => numberTile(tile)).toList(),);
+      }).toList(),);
   }
 
 

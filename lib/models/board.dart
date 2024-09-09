@@ -1,9 +1,8 @@
 import 'dart:collection';
 
 class Board{
-  final int count = 90;
   final int id;
-  late List<BoardNumberTile> tiles;
+  final List<List<BoardNumberTile>> tiles = List.empty(growable: true);
   HashSet<int> availableNumbers = HashSet();
   Map<int,BoardNumberTile> numberToTileMap = {};
   Board(this.id){
@@ -11,10 +10,19 @@ class Board{
   }
 
   void _generateTiles(){
-    tiles = List.generate(count, (index){
-      availableNumbers.add(index+1);
-      return numberToTileMap[index+1] = BoardNumberTile(index+1, false);
-    });
+    int number = 0;
+    //9 rows 10 columns = 90 numbers
+    for(int row=1;row<=9;row++){
+      List<BoardNumberTile> newRow = [];
+      for(int col=1;col<=10;col++){
+        number = 10*(row-1) + col;
+        BoardNumberTile tile = BoardNumberTile(number,false);
+        newRow.add(tile);
+        availableNumbers.add(number);
+        numberToTileMap[number] = tile;
+      }
+      tiles.add(newRow);
+    }
   }
 }
 

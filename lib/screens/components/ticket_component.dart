@@ -64,13 +64,11 @@ class _TicketComponentState extends State<TicketComponent> {
   
   Widget ticketNumbers(BuildContext subContext){
     return Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [0,1,2].map((e){
-        int startIndex = 9*e;
-        List<int> indexes = List.generate(9, (index) => (startIndex+(index)));
+      children: ticket.tiles.map((rowTile){
       return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: indexes.map((index){
-          if(ticket.tiles[index].hasNumber) {
-            return numberTile(ticket.tiles[index],subContext);
+        children: rowTile.map((tile){
+          if(tile.hasNumber) {
+            return numberTile(tile,subContext);
           } else {
             return noNumberTile();
           }
