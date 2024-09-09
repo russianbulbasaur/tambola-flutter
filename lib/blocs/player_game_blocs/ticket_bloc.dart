@@ -1,7 +1,8 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'dart:developer' as dev;
 import '../../models/ticket.dart';
 
 class TicketBloc extends Bloc<TicketEvent,TicketState>{
@@ -24,7 +25,9 @@ class TicketBloc extends Bloc<TicketEvent,TicketState>{
   }
   
   void makeTicket(MakeTicketEvent event,emit){
+    Stopwatch stopwatch = Stopwatch()..start();
     Ticket ticket = Ticket(Random().nextInt(10000));
+    if(kDebugMode) dev.log("Ticket generation took ${stopwatch.elapsed.inSeconds} seconds");
     emit(TicketReadyState(ticket));
   }
 }

@@ -42,7 +42,7 @@ class _WaitingForPlayersPlayerSheetState extends State<WaitingForPlayersPlayerSh
     return Column(mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text("Game Id : ${monitor.game.id}\n Waiting for players",textAlign: TextAlign.center,),
+        SelectableText("Game Id : ${monitor.game.id}\n Waiting for players",textAlign: TextAlign.center,),
         CircularProgressIndicator(color: Theme.of(context).secondaryHeaderColor,),
         SizedBox(height: MediaQuery.of(context).size.height/3,
           child: BlocConsumer<Monitor,GameBlocState>(bloc: monitor,

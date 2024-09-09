@@ -63,16 +63,13 @@ class _TicketComponentState extends State<TicketComponent> {
   }
   
   Widget ticketNumbers(BuildContext subContext){
-    return Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: ticket.tiles.map((rowTile){
-      return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: rowTile.map((tile){
-          if(tile.hasNumber) {
-            return numberTile(tile,subContext);
-          } else {
-            return noNumberTile();
-          }
-      }).toList(),);
+    return Row(mainAxisAlignment: MainAxisAlignment.center,
+    children: ticket.tiles.map((colTiles){
+      return Column(mainAxisAlignment: MainAxisAlignment.center,
+        children: colTiles.map((tile){
+          if(tile.hasNumber) return numberTile(tile, subContext);
+          return noNumberTile();
+        }).toList(),);
     }).toList(),);
   }
 
