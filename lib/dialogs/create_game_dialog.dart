@@ -31,36 +31,41 @@ class _CreateGameDialogState extends State<CreateGameDialog> {
       create: (context) => GameRepository(),
       child: BlocProvider(
         create: (context) => CreateGameBloc(null, context.read<GameRepository>()),
-        child: Builder(builder: (context){
-          return Column(children: [
-            titleBanner(),
-            SizedBox(height: 50.h,),
-            createButton(context)
-          ],);
+        child: BlocConsumer<CreateGameBloc,CreateGameBlocResponse?>(
+            listener: (context,state){
+              Navigator.push(context, MaterialPageRoute(builder: (context){
+                Resources.user!.type = UserType.host;
+                return HostBoardScreen(game: state!.game!);
+              }));
+            },listenWhen: (prev,curr) => (curr!=null && curr.game!=null)
+            ,builder: (context,state){
+          return Stack(fit: StackFit.expand,
+            children: [
+              Align(alignment: Alignment.topCenter,
+                child: titleBanner(),),
+              Column(mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  createButton(context)
+                ],
+              )
+            ],
+          );
         })
       ),
     );
   }
 
   Widget titleBanner(){
-    return BlocConsumer<CreateGameBloc,CreateGameBlocResponse?>(
-    listener: (context,state){
-      Navigator.push(context, MaterialPageRoute(builder: (context){
-        Resources.user!.type = UserType.host;
-        return HostBoardScreen(game: state!.game!);
-      }));
-    },listenWhen: (prev,curr) => (curr!=null && curr.game!=null)
-    ,builder: (context,state){
-      return Container(height: 50.h,
-        decoration: BoxDecoration(color: Theme.of(context).secondaryHeaderColor),
-        child: Center(
-          child:Text("Create Game",
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                fontSize: 50.sp,
-                color: Theme.of(context).dialogBackgroundColor
-            ),),
-        ),);
-    });
+    return Container(height: 50.h,
+      decoration: BoxDecoration(color: Theme.of(context).secondaryHeaderColor),
+      child: Center(
+        child:Text("Create Game",
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              fontSize: 30.sp,
+              color: Theme.of(context).dialogBackgroundColor
+          ),),
+      ),);
   }
 
   Widget createButton(BuildContext subContext){

@@ -29,10 +29,10 @@ class Ticket{
 
   List<TicketNumberTile> threeColumnTiles(int column){
     HashSet<int> choices = HashSet();
-    List<int> startPoints = [1,11,21,31,41,51,61,71,81]; // Min values for columns
+    List<int> startPoints = [1,10,20,30,40,50,60,70,80]; // Min values for columns
     int startPoint = startPoints[column];
-    for(int i=0;i<10;i++){
-      choices.add(startPoint+i); //eg col 0 will start from 1 and end at 1+9 = 10;
+    for(int i=0;i<9;i++){
+      choices.add(startPoint+i); //eg col 0 will start from 1 and end at 1+8 = 9;
     }
     //3 choices
     List<TicketNumberTile> columnTiles = [];

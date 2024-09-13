@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tambola/blocs/core_game_blocs/monitor.dart';
 import 'package:tambola/common/app_button.dart';
 import 'package:tambola/models/game.dart';
+import 'package:tambola/screens/components/callout_component.dart';
 import 'package:tambola/screens/components/ticket_component.dart';
 import '../../bottom_sheets/waiting_for_players_player_sheet.dart';
 import '../../common/resources.dart';
@@ -58,7 +59,7 @@ class _PlayersTicketScreenState extends State<PlayersTicketScreen> {
       listener: (context,state){},
       builder: (context,state){
       return Column(children: [
-          callouts(),
+          CalloutComponent(game: _game),
           SizedBox(height: 10.h,),
           Divider(thickness: 4.h,color: Colors.black,),
           SizedBox(height: 10.h,),
@@ -77,31 +78,6 @@ class _PlayersTicketScreenState extends State<PlayersTicketScreen> {
     ListView.builder(itemBuilder: (context,index){
       return const TicketComponent();
     },itemCount: 1,));
-  }
-
-
-  Widget callouts(){
-    return Column(
-      children: [
-        Text((_game.state.called==0)?"B e g i n":(_game.state.called.toString()),
-          style: Theme.of(context).textTheme.bodySmall!.copyWith(
-            color: Theme.of(context).dividerColor,
-            fontSize: 30.sp,
-          ),),
-        SizedBox(height: 20.h,),
-        //Grey box
-        Container(decoration: BoxDecoration(
-          color: Theme.of(context).dividerColor,
-        ),
-          height: 80.h,
-          width: MediaQuery.of(context).size.width/2,
-          child: Center(child: Text(Resources.callouts[_game.state.called],
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                fontSize: 25.sp,
-                color: Colors.white
-            ),textAlign: TextAlign.center,),),),
-      ],
-    );
   }
 
 }

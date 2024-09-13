@@ -35,43 +35,62 @@ class _JoinGameDialogState extends State<JoinGameDialog> {
       create: (context) => GameRepository(),
       child: BlocProvider(
           create: (context) => JoinGameBloc(null, context.read<GameRepository>()),
-          child: Builder(builder: (context){
-            return Column(children: [
-              titleBanner(),
-              SizedBox(height: 50.h,),
-              codeField(),
-              SizedBox(height: 20.h,),
-              createButton(context)
-            ],);
+          child: BlocConsumer<JoinGameBloc,JoinGameBlocResponse?>(
+              listener: (context,state){
+                Navigator.push(context, MaterialPageRoute(builder: (context){
+                  Resources.user!.type = UserType.player;
+                  return PlayersTicketScreen(game: state!.game!);
+                }));
+              },listenWhen: (prev,curr) => (curr!=null && curr.game!=null)
+              ,builder: (context,state){
+            return Stack(fit: StackFit.expand,
+              children: [
+                Align(alignment: Alignment.topCenter,
+                  child: titleBanner(),),
+                Column(mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    codeField(),
+                    SizedBox(height: 20.h,),
+                    createButton(context)
+                  ],
+                )
+              ],
+            );
           })
       ),
     );
   }
 
   Widget codeField(){
-    return Material(
-        child: TextField(controller: _codeController,));
+    return Material(color: Colors.transparent,
+      child: Container(width: 190.w,
+        height: 43.h,
+        color: Colors.transparent,
+        child: TextField(controller: _codeController,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              color: Colors.white
+          ),
+          decoration: InputDecoration(border:
+          OutlineInputBorder(borderRadius: BorderRadius.circular(6.r),
+              borderSide: BorderSide(color: Colors.white70)),
+              fillColor: Theme.of(context).primaryColorDark,
+              filled: true),),
+      ),
+    );
   }
 
   Widget titleBanner(){
-    return BlocConsumer<JoinGameBloc,JoinGameBlocResponse?>(
-        listener: (context,state){
-          Navigator.push(context, MaterialPageRoute(builder: (context){
-            Resources.user!.type = UserType.player;
-            return PlayersTicketScreen(game: state!.game!);
-          }));
-        },listenWhen: (prev,curr) => (curr!=null && curr.game!=null)
-        ,builder: (context,state){
-      return Container(height: 50.h,
-        decoration: BoxDecoration(color: Theme.of(context).secondaryHeaderColor),
-        child: Center(
-          child:Text("Enter Game Code",
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                fontSize: 50.sp,
-                color: Theme.of(context).dialogBackgroundColor
-            ),),
-        ),);
-    });
+    return Container(height: 50.h,
+      decoration: BoxDecoration(color: Theme.of(context).secondaryHeaderColor),
+      child: Center(
+        child:Text("Enter Game Code",
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              fontSize: 30.sp,
+              color: Theme.of(context).dialogBackgroundColor
+          ),textAlign: TextAlign.center,),
+      ),);
   }
 
   Widget createButton(BuildContext subContext){

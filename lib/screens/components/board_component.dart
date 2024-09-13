@@ -27,12 +27,13 @@ class BoardComponent extends StatelessWidget {
 
 
   Widget numberTile(BoardNumberTile tile){
-    return Container(height: 70.w,width: 70.w,
+    return Container(height: 33.h,width: 33.w,
       padding: const EdgeInsets.all(4),
       child: CircleAvatar(backgroundColor:
       (tile.isCalled?Theme.of(subContext).dividerColor:Colors.white),child:
       Text(tile.number.toString(),style: Theme.of(subContext).textTheme.bodySmall!.copyWith(
-          fontSize: 30.sp,
+          fontSize: 15.sp,
+          fontWeight: FontWeight.w400,
           color: (tile.isCalled?Colors.white:Colors.black)
       ),),),
     );

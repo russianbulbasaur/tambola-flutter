@@ -22,7 +22,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       body:
       SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(left: 20.w,top:50.h,right: 20.w,bottom: 50.h),
+          padding: EdgeInsets.only(top:50.h,bottom: 50.h),
           child: body(),
         ),
       ),);
@@ -45,8 +45,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       crossAxisAlignment:CrossAxisAlignment.center,children: [
       Text("TAMBOLA",style:
       Theme.of(context).textTheme.bodySmall!.copyWith(
-          fontWeight: FontWeight.bold,
-          fontSize: 100.sp,
+          fontWeight: FontWeight.w600,
+          fontSize: 36.sp,
         letterSpacing: 5.w
       ),),
       SizedBox(height: 10.h,),
@@ -57,28 +57,26 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget footerText(){
     return Text("Welcome to Tambola Web! Tap, match, and shout 'Tambola!' Dive into the excitement now!",
       style: Theme.of(context).textTheme.bodySmall!.copyWith(
-          fontSize: 30.sp
+          fontSize: 14.sp,
+        fontWeight: FontWeight.w400
       ),
     textAlign: TextAlign.center,);
   }
   
   Widget buttonsAndFooter(){
-    return Padding(
-      padding: EdgeInsets.only(left: 150.w,right: 150.w),
-      child: Column(children: [
-        AppButton(size: Size(MediaQuery.of(context).size.width,35.h),
-            backgroundColor:Theme.of(context).secondaryHeaderColor,
-            child: const Text("Create Game"),
-            onPressed: () => initUserDialog(const CreateGameDialog())),
-        SizedBox(height: 10.h,),
-        AppButton(size: Size(MediaQuery.of(context).size.width,35.h),
-            backgroundColor:Theme.of(context).primaryColorDark,
-            child: const Text("Join Game"),
-            onPressed: () => initUserDialog(const JoinGameDialog())),
-        SizedBox(height: 30.h,),
-        footerText()
-      ],),
-    );
+    return Column(children: [
+      AppButton(size: Size(278.w,41.h),
+          backgroundColor:Theme.of(context).secondaryHeaderColor,
+          child: const Text("Create Game"),
+          onPressed: () => initUserDialog(const CreateGameDialog())),
+      SizedBox(height: 10.h,),
+      AppButton(size: Size(278.w,41.h),
+          backgroundColor:Theme.of(context).primaryColorDark,
+          child: const Text("Join Game"),
+          onPressed: () => initUserDialog(const JoinGameDialog())),
+      SizedBox(height: 30.h,),
+      footerText()
+    ],);
   }
 
   void initUserDialog(Widget child) async{
@@ -90,7 +88,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               child: Wrap(children: [
                 Transform.scale(
                   scaleX: anim1.value,
-                  scaleY: anim1.value,
                   child: const NameDialog(),
                 )
               ],),
@@ -98,7 +95,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           );
         }, pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
           return child;
-        });
+        },transitionDuration: const Duration(milliseconds: 700));
     if(Resources.user!=null) createDialog(child);
   }
 
@@ -111,7 +108,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                child: Wrap(children: [
                  Transform.scale(
                    scaleX: anim1.value,
-                   scaleY: anim1.value,
                    child: child,
                  )
                ],),
@@ -119,6 +115,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
            );
         }, pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
            return child;
-        });
+        },transitionDuration: const Duration(milliseconds: 700));
   }
 }

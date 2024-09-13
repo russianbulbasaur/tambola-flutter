@@ -15,7 +15,7 @@ class AppButton extends StatelessWidget {
     style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(backgroundColor),
     fixedSize: WidgetStatePropertyAll(size),
     shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: 
-    BorderRadius.circular(16.r)))),
+    BorderRadius.circular(10.r)))),
     child: Row(mainAxisAlignment: MainAxisAlignment.center,
       children: [
         child,

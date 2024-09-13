@@ -14,7 +14,7 @@ class Resources{
     primaryColorDark: const Color(0xff2c382e),
     dividerColor: const Color(0xff7F8068),
     textTheme: TextTheme(
-      bodySmall: GoogleFonts.roboto()
+      bodySmall: GoogleFonts.inter()
     )
   );
 

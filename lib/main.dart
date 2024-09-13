@@ -12,7 +12,7 @@ class TambolaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(designSize: const Size(930,640),
+    return ScreenUtilInit(designSize: const Size(390,844),
     builder: (_,child){
       return MaterialApp(
         theme: Resources.lightThemeData,

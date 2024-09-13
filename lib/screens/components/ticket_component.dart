@@ -25,9 +25,10 @@ class _TicketComponentState extends State<TicketComponent> {
   Widget body(){
     return Container(
       margin: EdgeInsets.only(left: 20.w,right: 20.w),
+      padding: EdgeInsets.all(5.w),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.r),
-      border: Border.all(color: Theme.of(context).dividerColor),
-      color: Theme.of(context).secondaryHeaderColor.withOpacity(0.3)),
+      boxShadow: const [BoxShadow(color: Colors.black)],
+      color: const Color(0xffF9F9F9)),
         child: ticketBody());
   }
   
@@ -43,18 +44,15 @@ class _TicketComponentState extends State<TicketComponent> {
         }
         return Column(crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            header(),
-            SizedBox(height: 10.h,),
-            Divider(thickness: 2.h,color: Colors.black,),
-            SizedBox(height: 20.h,),
             ticketNumbers(context),
-            SizedBox(height: 30.h,),
+            SizedBox(height: 5.h,),
+            footer(),
           ],);
       })
     );
   }
   
-  Widget header(){
+  Widget footer(){
     return Container(
       padding: EdgeInsets.all(20.w),
       child: Text("Ticket ${ticket.id}",
@@ -63,9 +61,9 @@ class _TicketComponentState extends State<TicketComponent> {
   }
   
   Widget ticketNumbers(BuildContext subContext){
-    return Row(mainAxisAlignment: MainAxisAlignment.center,
+    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: ticket.tiles.map((colTiles){
-      return Column(mainAxisAlignment: MainAxisAlignment.center,
+      return Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: colTiles.map((tile){
           if(tile.hasNumber) return numberTile(tile, subContext);
           return noNumberTile();
@@ -75,9 +73,9 @@ class _TicketComponentState extends State<TicketComponent> {
 
 
   Widget noNumberTile(){
-    return Container(height: 50.w,width: 50.w,
+    return Container(height: 21.h,width: 21.w,
       margin: const EdgeInsets.all(5),
-      decoration: BoxDecoration(color: Theme.of(context).secondaryHeaderColor),
+      decoration: const BoxDecoration(color: Color(0xffF8F7D2)),
       padding: const EdgeInsets.all(4)
     );
   }
@@ -90,12 +88,15 @@ class _TicketComponentState extends State<TicketComponent> {
         BlocProvider.of<TicketBloc>(subContext).add(TickNumberEvent(tile));
       }
     },
-      child: Container(height: 50.w,width: 50.w,
+      child: Container(
         margin: const EdgeInsets.all(5),
-        decoration: BoxDecoration(color: Theme.of(context).secondaryHeaderColor),
+        decoration: BoxDecoration(color:
+        (tile.isTicked)?const Color(0xff000000).withOpacity(0.2):
+        const Color(0xffF8F7D2)),
         padding: const EdgeInsets.all(4),
         child: Text(tile.number.toString(),style: Theme.of(context).textTheme.bodySmall!.copyWith(
-            fontSize: 30.sp,
+            fontSize: 18.sp,
+          fontWeight: FontWeight.w400,
           decoration: (tile.isTicked)?TextDecoration.lineThrough:null,
         ),textAlign: TextAlign.center),
       ),
