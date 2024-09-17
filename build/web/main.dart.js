@@ -75906,7 +75906,7 @@ A.nv.prototype={
 kf(){var s=0,r=A.L(t.Tt),q,p,o,n,m
 var $async$kf=A.M(function(a,b){if(a===1)return A.I(b,r)
 while(true)switch(s){case 0:n=$.oB
-m=A.aoD(A.VF(A.hW("ws://127.0.0.1:8000/game/create?user_id="+n.a+"&name="+n.b,0,null),null))
+m=A.aoD(A.VF(A.hW("ws://68.183.94.97:8000/game/create?user_id="+n.a+"&name="+n.b,0,null),null))
 s=3
 return A.S(m.f.a,$async$kf)
 case 3:J.fg(0,t.N)
@@ -75926,7 +75926,7 @@ iF(a){return this.afR(a)},
 afR(a){var s=0,r=A.L(t.Tt),q,p,o,n,m
 var $async$iF=A.M(function(b,c){if(b===1)return A.I(c,r)
 while(true)switch(s){case 0:n=$.oB
-m=A.aoD(A.VF(A.hW("ws://127.0.0.1:8000/game/join?user_id="+n.a+"&name="+n.b+"&code="+a,0,null),null))
+m=A.aoD(A.VF(A.hW("ws://68.183.94.97:8000/game/join?user_id="+n.a+"&name="+n.b+"&code="+a,0,null),null))
 s=3
 return A.S(m.f.a,$async$iF)
 case 3:J.fg(0,t.N)
