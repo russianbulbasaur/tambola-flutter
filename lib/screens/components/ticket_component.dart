@@ -73,14 +73,22 @@ class _TicketComponentState extends State<TicketComponent> {
 
 
   Widget noNumberTile(){
-    return Container(
-      margin: const EdgeInsets.all(5),
-      decoration: const BoxDecoration(color: Color(0xffF8F7D2)),
-      padding: const EdgeInsets.all(4)
+    return GestureDetector(onTap: (){},
+      child: Container(
+        margin: const EdgeInsets.all(5),
+        decoration: const BoxDecoration(color:
+        Color(0xffF8F7D2)),
+        padding: const EdgeInsets.all(4),
+        child: Text("65",style: Theme.of(context).textTheme.bodySmall!.copyWith(
+          fontWeight: FontWeight.w400,
+          color: const Color(0xffF8F7D2),
+        ),textAlign: TextAlign.center),
+      ),
     );
   }
 
   Widget numberTile(TicketNumberTile tile,BuildContext subContext){
+    String number = (tile.number<10)?" ${tile.number}":tile.number.toString();
     return GestureDetector(onTap: (){
       if(tile.isTicked) {
         BlocProvider.of<TicketBloc>(subContext).add(UnTickNumberEvent(tile));
@@ -94,7 +102,7 @@ class _TicketComponentState extends State<TicketComponent> {
         (tile.isTicked)?const Color(0xff000000).withOpacity(0.2):
         const Color(0xffF8F7D2)),
         padding: const EdgeInsets.all(4),
-        child: Text(tile.number.toString(),style: Theme.of(context).textTheme.bodySmall!.copyWith(
+        child: Text(number,style: Theme.of(context).textTheme.bodySmall!.copyWith(
           fontWeight: FontWeight.w400,
           decoration: (tile.isTicked)?TextDecoration.lineThrough:null,
         ),textAlign: TextAlign.center),
