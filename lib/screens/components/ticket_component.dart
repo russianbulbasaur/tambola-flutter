@@ -73,7 +73,7 @@ class _TicketComponentState extends State<TicketComponent> {
 
 
   Widget noNumberTile(){
-    return Container(height: 21.h,width: 21.w,
+    return Container(
       margin: const EdgeInsets.all(5),
       decoration: const BoxDecoration(color: Color(0xffF8F7D2)),
       padding: const EdgeInsets.all(4)
@@ -95,7 +95,6 @@ class _TicketComponentState extends State<TicketComponent> {
         const Color(0xffF8F7D2)),
         padding: const EdgeInsets.all(4),
         child: Text(tile.number.toString(),style: Theme.of(context).textTheme.bodySmall!.copyWith(
-            fontSize: 18.sp,
           fontWeight: FontWeight.w400,
           decoration: (tile.isTicked)?TextDecoration.lineThrough:null,
         ),textAlign: TextAlign.center),

@@ -23,6 +23,7 @@ class Ticket{
       }
     }
 
+
     //final validity check
     if(!validateTicket()) _generateTiles();
   }
@@ -38,7 +39,7 @@ class Ticket{
     List<TicketNumberTile> columnTiles = [];
     for(int i=0;i<3;i++){
       List<int> choicesList = choices.toList();
-      int choice = choicesList[Random().nextInt(100000)%choicesList.length];
+      int choice = choicesList[Random().nextInt(1034549)%choicesList.length];
       columnTiles.add(TicketNumberTile(choice, false, false));
       choices.remove(choice);
     }
@@ -62,9 +63,9 @@ class Ticket{
 
   int randomColumn(HashSet<int> availableColumns){
     List<int> columnList = availableColumns.toList();
-    int chosen = Random().nextInt(10000)%columnList.length;
+    int chosen = columnList[Random().nextInt(10000)%columnList.length];
     availableColumns.remove(chosen);
-    return columnList[chosen];
+    return chosen;
   }
 
 
