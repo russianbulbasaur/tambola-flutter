@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tambola/screens/welcome_screen.dart';
@@ -19,7 +20,7 @@ class Resources{
   );
 
   //server url
-  static String ipPort = "68.183.94.97:8000";
+  static String ipPort = (kDebugMode)?"127.0.0.1:8000":"68.183.94.97:8000";
 
   static Route route(RouteSettings settings){
     switch(settings.name){

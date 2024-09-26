@@ -16,7 +16,7 @@ class Message{
     return Message(decodedMap["id"],
         event,
         User.fromJson(jsonEncode(decodedMap["sender"])),
-        decodedMap[event.payloadName()]);
+        decodedMap["payload"]);
   }
 
 
@@ -25,7 +25,7 @@ class Message{
       "id" : id,
       "event":event.name.toString(),
       "sender" : sender.toMap(),
-      event.payloadName() : payload
+      "payload" : payload
     });
   }
 
@@ -58,23 +58,4 @@ enum Events{
   number_called,
   game_status,
   players_already_in_lobby
-}
-
-extension EventFunctions on Events{
-  String payloadName(){
-    switch(this){
-      case Events.user_joined:
-        return "user_joined_payload";
-      case Events.user_left:
-        return "user_left_payload";
-      case Events.players_already_in_lobby:
-        return "players_already_in_lobby_payload";
-      case Events.number_called:
-        return "number_payload";
-      case Events.game_status:
-        return "game_status_payload";
-      case Events.alert:
-        return "alert_payload";
-    }
-  }
 }
