@@ -30,7 +30,7 @@ class Message{
   }
 
   User decodePlayerPayload(){
-    return User.fromMap(payload["user"]);
+    return User.fromMap(payload["player"]);
   }
 
   int decodeNumberPayload(){
@@ -52,8 +52,8 @@ class Message{
 
 
 enum Events{
-  user_joined,
-  user_left,
+  player_joined,
+  player_left,
   alert,
   number_called,
   game_status,

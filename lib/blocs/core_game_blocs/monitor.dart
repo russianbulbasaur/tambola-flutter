@@ -33,11 +33,11 @@ class Monitor extends Bloc<GameEvent,GameBlocState>{
           game.state.initState(message
               .decodePlayersInLobbyPayload()); //decodes list of players and gameid
           break;
-        case Events.user_joined:
+        case Events.player_joined:
           game.state.addPlayer(message.decodePlayerPayload());
           add(UserJoinedEvent());
           break;
-        case Events.user_left:
+        case Events.player_left:
           break;
         case Events.alert:
           break;
