@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tambola/common/resources.dart';
 import 'package:tambola/screens/welcome_screen.dart';
 
-void main() async {
+void main() {
   runApp(const TambolaApp());
 }
 

@@ -1,12 +1,15 @@
 import 'dart:ui';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tambola/common/app_button.dart';
 import 'package:tambola/common/resources.dart';
 import 'package:tambola/dialogs/create_game_dialog.dart';
 import 'package:tambola/dialogs/join_game_dialog.dart';
+import 'package:tambola/dialogs/login_dialog.dart';
 import 'package:tambola/dialogs/name_dialog.dart';
+import 'package:tambola/firebase_options.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -16,6 +19,22 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 2),loginDialog);
+    super.initState();
+  }
+
+  void loginDialog() async{
+    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    showGeneralDialog(context: context, pageBuilder: (context,anim1,anim2){
+      return const LoginDialog();
+    },transitionBuilder: (context,anim1,anim2,child){
+      return child;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(backgroundColor: Theme.of(context).primaryColor,
