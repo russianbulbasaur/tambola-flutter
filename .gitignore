@@ -23,3 +23,5 @@ doc/api/
 .flutter-plugins
 .flutter-plugins-dependencies
 !build/web/
+lib/firebase_options.dart
+firebase.json
