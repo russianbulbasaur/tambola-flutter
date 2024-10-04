@@ -1,9 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tambola/common/resources.dart';
 import 'package:tambola/screens/welcome_screen.dart';
 
-void main() {
+void main() async {
   runApp(const TambolaApp());
 }
 

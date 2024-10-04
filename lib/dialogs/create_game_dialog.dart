@@ -34,7 +34,7 @@ class _CreateGameDialogState extends State<CreateGameDialog> {
         child: BlocConsumer<CreateGameBloc,CreateGameBlocResponse?>(
             listener: (context,state){
               Navigator.push(context, MaterialPageRoute(builder: (context){
-                Resources.user!.type = UserType.host;
+                Resources.user!.isHost = true;
                 return HostBoardScreen(game: state!.game!);
               }));
             },listenWhen: (prev,curr) => (curr!=null && curr.game!=null)

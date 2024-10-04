@@ -38,7 +38,7 @@ class _JoinGameDialogState extends State<JoinGameDialog> {
           child: BlocConsumer<JoinGameBloc,JoinGameBlocResponse?>(
               listener: (context,state){
                 Navigator.push(context, MaterialPageRoute(builder: (context){
-                  Resources.user!.type = UserType.player;
+                  Resources.user!.isHost = false;
                   return PlayersTicketScreen(game: state!.game!);
                 }));
               },listenWhen: (prev,curr) => (curr!=null && curr.game!=null)

@@ -1,26 +1,37 @@
 import 'dart:convert';
 
 class User{
-  int id;
-  String name;
-  UserType? type;
-  User(this.id,this.name);
+  late int id;
+  late String name;
+  late bool isHost;
+  late String phone;
+  late String token;
+
+  User(){}
+
 
   factory User.fromJson(String json){
     Map<String,dynamic> decodedMap = jsonDecode(json);
-    return User(decodedMap["id"],decodedMap["name"]);
+    User user = User();
+    if(decodedMap.containsKey("id")) user.id = decodedMap["id"];
+    if(decodedMap.containsKey("name")) user.name = decodedMap["name"];
+    if(decodedMap.containsKey("isHost")) user.isHost = decodedMap["isHost"];
+    if(decodedMap.containsKey("phone")) user.phone = decodedMap["phone"];
+    if(decodedMap.containsKey("token")) user.token = decodedMap["token"];
+    return user;
   }
 
   factory User.fromMap(Map<String,dynamic> decodedMap){
-    return User(decodedMap["id"],decodedMap["name"]);
+    User user = User();
+    if(decodedMap.containsKey("id")) user.id = decodedMap["id"];
+    if(decodedMap.containsKey("name")) user.name = decodedMap["name"];
+    if(decodedMap.containsKey("isHost")) user.isHost = decodedMap["isHost"];
+    if(decodedMap.containsKey("phone")) user.phone = decodedMap["phone"];
+    if(decodedMap.containsKey("token")) user.token = decodedMap["token"];
+    return user;
   }
 
   Map toMap(){
-    return {"id":id,"name":name};
+    return {"id":id,"name":name,"phone":phone,"token":token};
   }
-}
-
-
-enum UserType {
-  host,player
 }

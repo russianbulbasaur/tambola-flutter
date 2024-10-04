@@ -85,7 +85,6 @@ class _NameDialogState extends State<NameDialog> {
   void createUser(){
     print(_nameController.text);
     if(_nameController.text.isEmpty) return;
-    Resources.user = User(Random().nextInt(100000),_nameController.text);
     Navigator.pop(context);
   }
 }
