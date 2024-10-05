@@ -20,7 +20,7 @@ class AuthBloc extends Bloc<AuthEvent,AuthState>{
     try{
       String firebaseToken = await _repo.sendOTP(event.phone);
       if(kDebugMode) print("Firebase token : $firebaseToken");
-      emit(OTPSentState(firebaseToken));
+      emit(OTPSentState(firebaseToken,event.phone));
     }on firebase.FirebaseException catch(e){
       if(kDebugMode) log("Firebase error${e.message}");
     }
@@ -80,7 +80,8 @@ class SignupEvent extends AuthEvent{
 abstract class AuthState{}
 class OTPSentState extends AuthState{
   final String firebaseToken;
-  OTPSentState(this.firebaseToken);
+  final String phone;
+  OTPSentState(this.firebaseToken,this.phone);
 }
 
 class LoggedInState extends AuthState{

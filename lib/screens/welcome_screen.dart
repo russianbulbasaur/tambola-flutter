@@ -1,8 +1,12 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tambola/blocs/user_blocs/user_bloc.dart';
 import 'package:tambola/common/app_button.dart';
 import 'package:tambola/common/resources.dart';
 import 'package:tambola/dialogs/create_game_dialog.dart';
@@ -10,6 +14,8 @@ import 'package:tambola/dialogs/join_game_dialog.dart';
 import 'package:tambola/dialogs/login_dialog.dart';
 import 'package:tambola/dialogs/name_dialog.dart';
 import 'package:tambola/firebase_options.dart';
+
+import '../models/user.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -19,6 +25,7 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  final UserBloc _userBloc = UserBloc(null);
 
   @override
   void initState() {
@@ -26,13 +33,27 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _userBloc.close();
+    super.dispose();
+  }
+
   void loginDialog() async{
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-    showGeneralDialog(context: context, pageBuilder: (context,anim1,anim2){
-      return const LoginDialog();
+    User user = await showGeneralDialog(context: context, pageBuilder: (context,anim1,anim2){
+      return BackdropFilter(
+      filter: ImageFilter.blur(
+        sigmaY: 3,
+        sigmaX: 3
+      ),child: const LoginDialog());
     },transitionBuilder: (context,anim1,anim2,child){
-      return child;
-    });
+      return Transform.translate(offset: Offset(anim1.value, anim1.value),child: child,);
+    },transitionDuration: const Duration(seconds: 2),
+    barrierDismissible: false) as User;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("user", jsonEncode(user.toMap()));
+    _userBloc.reloadUser();
   }
 
   @override
@@ -48,15 +69,21 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
   
   Widget body(){
-    return Center(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          titleAndImage(),
-          SizedBox(height: 50.h,),
-          buttonsAndFooter(),
-      ],),
-    );
+    return BlocConsumer<UserBloc,User?>(bloc: _userBloc,builder: (context,state){
+      Resources.user = state;
+      return Center(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            titleAndImage(),
+            SizedBox(height: 50.h,),
+            buttonsAndFooter(),
+          ],),
+      );
+    }, listener: (context,state){
+      loginDialog();
+    },listenWhen: (prev,curr) => curr==null,
+    buildWhen: (prev,curr) => curr!=null,);
   }
 
   Widget titleAndImage(){
@@ -87,36 +114,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       AppButton(size: Size(278.w,41.h),
           backgroundColor:Theme.of(context).secondaryHeaderColor,
           child: const Text("Create Game"),
-          onPressed: () => initUserDialog(const CreateGameDialog())),
+          onPressed: () => createDialog(const CreateGameDialog())),
       SizedBox(height: 10.h,),
       AppButton(size: Size(278.w,41.h),
           backgroundColor:Theme.of(context).primaryColorDark,
           child: const Text("Join Game"),
-          onPressed: () => initUserDialog(const JoinGameDialog())),
+          onPressed: () => createDialog(const JoinGameDialog())),
       SizedBox(height: 30.h,),
       footerText()
     ],);
   }
 
-  void initUserDialog(Widget child) async{
-    await showGeneralDialog(context: context,
-        transitionBuilder: (context,anim1,anim2,child){
-          return BackdropFilter(filter:
-          ImageFilter.blur(sigmaX: 11,sigmaY: 11,),
-            child: Center(
-              child: Wrap(children: [
-                Transform.scale(
-                  scaleX: anim1.value,
-                  child: const NameDialog(),
-                )
-              ],),
-            ),
-          );
-        }, pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
-          return child;
-        },transitionDuration: const Duration(milliseconds: 700));
-    if(Resources.user!=null) createDialog(child);
-  }
 
   void createDialog(Widget child) async{
     Object? result = await showGeneralDialog(context: context,

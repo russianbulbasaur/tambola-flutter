@@ -41,9 +41,7 @@ class GameState{
 
   void initState(List decodePlayersInLobbyPayload) {
     players = (decodePlayersInLobbyPayload[1] as List).map((e) => User.fromMap(e)).toList();
-    game!.id = decodePlayersInLobbyPayload[0] as int;
-    print(game!.id);
-    print(players);
+    game!.id = decodePlayersInLobbyPayload[0] as String;
   }
 }
 

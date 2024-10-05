@@ -8,13 +8,14 @@ class GameRepository{
 
 
   Future<Game> createGame() async{
+    if(Resources.user==null) throw "User is null";
     WebSocketChannel channel = WebSocketChannel.connect(Uri.parse(
         "ws://${Resources.ipPort}/game/create?user_id=${Resources.user!.id}&"
-            "name=${Resources.user!.name}"));
+            "name=${Resources.user!.name}&token=${Resources.user!.token}"));
     await channel.ready;
     GameState state = GameState(GameStatus.waiting,List.empty(growable: true),List.empty(growable: true),
         List.empty(growable: true));
-    Game game = Game(0,state,
+    Game game = Game("",state,
         channel.stream,channel.sink);
     state.game = game;
     return game;
@@ -25,12 +26,12 @@ class GameRepository{
   Future<Game> joinGame(String code) async {
     WebSocketChannel channel = WebSocketChannel.connect(
       Uri.parse("ws://${Resources.ipPort}/game/join?user_id=${Resources.user!.id}&name=${Resources.user!.name}&"
-          "code=$code")
+          "code=$code&token=${Resources.user!.token}")
     );
     await channel.ready;
     GameState state = GameState(GameStatus.waiting,List.empty(growable: true),List.empty(growable: true),
         List.empty(growable: true));
-    Game game = Game(0,state,
+    Game game = Game("",state,
         channel.stream,channel.sink);
     state.game = game;
     return game;

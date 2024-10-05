@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tambola/dialogs/app_dialog.dart';
 import 'package:tambola/screens/welcome_screen.dart';
 
 import '../models/user.dart';
@@ -130,4 +131,15 @@ class Resources{
     "Top of the shop, ninety",
   ];
 
+  //App dialog controls
+  static bool appDialogActive = false;
+  static void showAppDialog(BuildContext context){
+    if(appDialogActive) return;
+    showGeneralDialog(context: context, pageBuilder: (context,anim1,anim2) => const AppDialog());
+  }
+
+  static void killAppDialog(BuildContext context){
+    if(!appDialogActive) return;
+    Navigator.pop(context);
+  }
 }
