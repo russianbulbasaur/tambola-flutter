@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tambola/blocs/host_game_blocs/begin_game_bloc.dart';
 import 'package:tambola/common/app_button.dart';
+import 'package:tambola/common/resources.dart';
 import 'package:tambola/models/game.dart';
 import 'package:tambola/models/game_state.dart';
 import 'package:tambola/models/user.dart';
@@ -32,16 +34,20 @@ class _WaitingForPlayersHostSheetState extends State<WaitingForPlayersHostSheet>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body:PopScope(canPop: false,
-        child: body(),
-      )
+    return PopScope(canPop: false,
+      child: Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(27.r),
+              topRight: Radius.circular(27.r))
+      ),
+      child: body()),
     );
   }
 
   Widget body(){
     return Column(mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
         gameDetails(),
         SizedBox(height: 20.h,),
@@ -54,20 +60,24 @@ class _WaitingForPlayersHostSheetState extends State<WaitingForPlayersHostSheet>
   }
   
   Widget gameDetails(){
-    return Column(
-      children: [
-        Container(decoration: BoxDecoration(color: Theme.of(context).secondaryHeaderColor),
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.only(left: 20.w,right: 20.w),
-          child: Row(
-            children: [
-              SelectableText("Game Id : ${monitor.game.id}\nWaiting for players",textAlign: TextAlign.left,),
-              const Spacer(),
-              Icon(Icons.settings,color: Theme.of(context).primaryColorDark,)
-            ],
-          ),
-        ),
-      ],
+    return Container(decoration: BoxDecoration(color: Theme.of(context).secondaryHeaderColor,
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(27.r),
+            topRight: Radius.circular(27.r))),
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.only(left: 20.w,right: 20.w,
+      top: 10.h,bottom: 10.h),
+      child: Row(
+        children: [
+          SelectableText("Game Id : ${monitor.game.id}\nWaiting for players",textAlign: TextAlign.left,),
+          const Spacer(),
+          GestureDetector(
+          onTap: (){
+            ClipboardData data = ClipboardData(text: "${Resources.httpIpPort}/game/join?code=${monitor.game.id}");
+            Clipboard.setData(data);
+          },child: Icon(Icons.share,color: Theme.of(context).primaryColorDark,))
+        //  Icon(Icons.settings,color: Theme.of(context).primaryColorDark,)
+        ],
+      ),
     );
   }
   
@@ -98,11 +108,9 @@ class _WaitingForPlayersHostSheetState extends State<WaitingForPlayersHostSheet>
   }
 
   Widget buttons(){
-    return Row(mainAxisAlignment: MainAxisAlignment.center,children: [
-      AppButton(size: Size(278.w,41.h),
-          backgroundColor: Theme.of(context).secondaryHeaderColor,
-          child: Text("Begin Game"), onPressed: startGame)
-    ],);
+    return AppButton(size: Size(123.w,26.h),
+        backgroundColor: Theme.of(context).dialogBackgroundColor,
+        child: Text("Begin Game"), onPressed: startGame);
   }
 
   void startGame(){

@@ -11,7 +11,7 @@ class Resources{
 
   static ThemeData lightThemeData = ThemeData(
     primaryColor: Colors.white,
-    dialogBackgroundColor: const Color(0xff2c282e),
+    dialogBackgroundColor: const Color(0xff2C382E),
     secondaryHeaderColor: const Color(0xffC5C383),
     primaryColorDark: const Color(0xff2c382e),
     dividerColor: const Color(0xff7F8068),
