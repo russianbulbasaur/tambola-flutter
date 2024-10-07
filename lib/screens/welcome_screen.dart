@@ -48,8 +48,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         sigmaX: 3
       ),child: const LoginDialog());
     },transitionBuilder: (context,anim1,anim2,child){
-      return Transform.translate(offset: Offset(anim1.value, anim1.value),child: child,);
-    },transitionDuration: const Duration(seconds: 2),
+      return child;
+    },
     barrierDismissible: false) as User;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("user", jsonEncode(user.toMap()));

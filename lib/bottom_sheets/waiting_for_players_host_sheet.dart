@@ -61,7 +61,7 @@ class _WaitingForPlayersHostSheetState extends State<WaitingForPlayersHostSheet>
           padding: EdgeInsets.only(left: 20.w,right: 20.w),
           child: Row(
             children: [
-              SelectableText("Game Id : ${monitor.game.id}\nWaiting for players",textAlign: TextAlign.center,),
+              SelectableText("Game Id : ${monitor.game.id}\nWaiting for players",textAlign: TextAlign.left,),
               const Spacer(),
               Icon(Icons.settings,color: Theme.of(context).primaryColorDark,)
             ],
@@ -90,7 +90,8 @@ class _WaitingForPlayersHostSheetState extends State<WaitingForPlayersHostSheet>
   Widget playerTile(User player){
     return SizedBox(height: 93.h,width: 68.w,
     child:Column(children: [
-      CircleAvatar(radius: 34.r,),
+      CircleAvatar(radius: 34.r,
+      child: Icon(Icons.person),),
       SizedBox(height: 10.h,),
       Text(player.name)
     ],),);
