@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tambola/blocs/host_game_blocs/begin_game_bloc.dart';
 import 'package:tambola/common/app_button.dart';
 import 'package:tambola/common/resources.dart';
-import 'package:tambola/models/game.dart';
 import 'package:tambola/models/game_state.dart';
 import 'package:tambola/models/user.dart';
 

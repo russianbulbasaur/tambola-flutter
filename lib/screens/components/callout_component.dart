@@ -16,16 +16,15 @@ class CalloutComponent extends StatelessWidget {
           style: Theme.of(context).textTheme.bodySmall!.copyWith(
               color: Theme.of(context).dividerColor,
               fontSize: 40.sp,
-              fontWeight: FontWeight.w600
+              fontWeight: FontWeight.w800
           ),),
         SizedBox(height: 20.h,),
         //Grey box
         Container(decoration: BoxDecoration(
           color: Theme.of(context).dividerColor,
         ),
-          padding: EdgeInsets.all(10.w),
-          height: 60.h,
-          width: MediaQuery.of(context).size.width/2,
+          padding: EdgeInsets.all(2.w),
+          width: 247.w,
           child: Center(child: Text(Resources.callouts[game.state.called],
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 fontSize: 11.sp,
