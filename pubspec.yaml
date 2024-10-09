@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_bloc: ^8.1.6
   google_fonts: ^6.2.1
+  auto_size_text: ^3.0.0
   flutter_screenutil: ^5.9.3
   http: ^1.2.2
   web_socket_channel: ^3.0.1

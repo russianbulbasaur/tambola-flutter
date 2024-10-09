@@ -25,9 +25,9 @@ class CalloutComponent extends StatelessWidget {
         ),
           padding: EdgeInsets.all(2.w),
           width: 247.w,
+          height: 50.h,
           child: Center(child: Text(Resources.callouts[game.state.called],
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                fontSize: 11.sp,
                 fontWeight: FontWeight.w600,
                 color: Colors.white
             ),textAlign: TextAlign.center,),),),

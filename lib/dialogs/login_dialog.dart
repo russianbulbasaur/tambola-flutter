@@ -102,7 +102,7 @@ class _LoginDialogState extends State<LoginDialog> {
   }
 
   Widget otpField(int index){
-    return SizedBox(width:35.h,
+    return SizedBox(width:50.h,
         child: TextField(controller: otpControllers[index],
         maxLength: 1,
         onChanged: (text) => onOtpFieldChanged(index,text),

@@ -54,47 +54,34 @@ class _TicketComponentState extends State<TicketComponent> {
   
   Widget footer(){
     return Container(
-      padding: EdgeInsets.all(20.w),
+      padding: EdgeInsets.only(top:10.h,left: 10.w),
       child: Text("Ticket ${ticket.id}",
       textAlign: TextAlign.start,),
     );
   }
   
   Widget ticketNumbers(BuildContext subContext){
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: ticket.tiles.map((colTiles){
-      return Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: colTiles.map((tile){
-          if(tile.hasNumber) return numberTile(tile, subContext);
-          return noNumberTile();
-        }).toList(),);
-    }).toList(),);
-  }
-
-
-  Widget noNumberTile(){
-    return GestureDetector(onTap: (){},
-      child: Container(
-        margin: const EdgeInsets.all(5),
-        decoration: const BoxDecoration(color:
-        Color(0xffF8F7D2)),
-        padding: const EdgeInsets.all(4),
-        child: Text("65",style: Theme.of(context).textTheme.bodySmall!.copyWith(
-          fontWeight: FontWeight.w400,
-          color: const Color(0xffF8F7D2),
-        ),textAlign: TextAlign.center),
-      ),
-    );
+    return GridView.builder(gridDelegate: const
+    SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 9,
+    childAspectRatio: 1),
+        itemBuilder: (context,index){
+           int col = index%9;
+           int row = index~/9;
+           return numberTile(ticket.tiles[col][row], subContext);
+        },itemCount: 27,
+    shrinkWrap: true,);
   }
 
   Widget numberTile(TicketNumberTile tile,BuildContext subContext){
-    String number = (tile.number<10)?" ${tile.number}":tile.number.toString();
-    return GestureDetector(onTap: (){
+    String number = "";
+    if(tile.hasNumber) number = (tile.number<10)?" ${tile.number}":tile.number.toString();
+    return InkWell(onTap: (){
+      if(!tile.hasNumber) return;
       if(tile.isTicked) {
         BlocProvider.of<TicketBloc>(subContext).add(UnTickNumberEvent(tile));
-      } else {
-        BlocProvider.of<TicketBloc>(subContext).add(TickNumberEvent(tile));
+        return;
       }
+      BlocProvider.of<TicketBloc>(subContext).add(TickNumberEvent(tile));
     },
       child: Container(
         margin: const EdgeInsets.all(5),
@@ -102,10 +89,12 @@ class _TicketComponentState extends State<TicketComponent> {
         (tile.isTicked)?const Color(0xff000000).withOpacity(0.2):
         const Color(0xffF8F7D2)),
         padding: const EdgeInsets.all(4),
-        child: Text(number,style: Theme.of(context).textTheme.bodySmall!.copyWith(
-          fontWeight: FontWeight.w400,
-          decoration: (tile.isTicked)?TextDecoration.lineThrough:null,
-        ),textAlign: TextAlign.center),
+        child: FittedBox(fit: BoxFit.cover,
+          child: Text(number,style: Theme.of(context).textTheme.bodySmall!.copyWith(
+            fontWeight: FontWeight.w400,
+            decoration: (tile.isTicked)?TextDecoration.lineThrough:null,
+          ),textAlign: TextAlign.center),
+        ),
       ),
     );
   }

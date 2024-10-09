@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:tambola/models/game_state.dart';
 import 'package:tambola/models/user.dart';
 
@@ -8,15 +10,23 @@ class Message{
   final Events event;
   final User sender;
   final Map<String,dynamic> payload;
+  int? timestamp;
   Message(this.id,this.event,this.sender,this.payload);
 
   factory Message.fromJson(String json){
     Map decodedMap = jsonDecode(json);
     Events event = Events.values.byName(decodedMap["event"]);
-    return Message(decodedMap["id"],
+    Message message = Message(decodedMap["id"],
         event,
         User.fromJson(jsonEncode(decodedMap["sender"])),
         decodedMap["payload"]);
+    // message.timestamp = decodedMap["timestamp"];
+    // if(kDebugMode){
+    //   int now = (DateTime.now().millisecondsSinceEpoch/1000) as int;
+    //   int diff = now - message.timestamp!;
+    //   log("Ping : ${diff*1000} ms");
+    // }
+    return message;
   }
 
 

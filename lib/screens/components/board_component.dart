@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tambola/models/board.dart';
@@ -11,7 +12,7 @@ class BoardComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     subContext = context;
     return Container(
-    padding: EdgeInsets.only(left: 20.w,right: 20.w)
+    padding: EdgeInsets.only(left: 10.w,right: 10.w)
     ,child: boardWidget());
   }
 
@@ -19,22 +20,27 @@ class BoardComponent extends StatelessWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.center,
       children: board.tiles.map((rowList){
         return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: rowList.map((tile) => numberTile(tile)).toList(),);
+          children: rowList.map((tile){
+            return numberTile(tile);
+          }).toList(),);
       }).toList(),);
   }
 
 
   Widget numberTile(BoardNumberTile tile){
-    return Container(padding: EdgeInsets.all(5.w),
-    margin: EdgeInsets.all(5.w),
-    decoration: BoxDecoration(shape: BoxShape.circle,
-    color:  (tile.isCalled?Theme.of(subContext).dividerColor:Colors.white)),
-    child:
-    Text(tile.number.toString(),style: Theme.of(subContext).textTheme.bodySmall!.copyWith(
-        fontSize: 15.sp,
-        fontWeight: FontWeight.w400,
-        color: (tile.isCalled?Colors.white:Colors.black)
-    ),),);
+    return Flexible(flex: 1,
+      fit: FlexFit.tight,
+      child: Container(
+        margin: EdgeInsets.only(top: 10.h,right: 5.w,left: 5.w,bottom: 10.h),
+      decoration: BoxDecoration(shape: BoxShape.circle,
+      color:  (tile.isCalled?Theme.of(subContext).dividerColor:Colors.white)),
+      child:
+      Text(tile.number.toString(),style: Theme.of(subContext).textTheme.bodySmall!.copyWith(
+          fontWeight: FontWeight.bold,
+          fontSize: 20.sp,
+          color: (tile.isCalled?Colors.white:Colors.black),
+      ),textAlign: TextAlign.center,),),
+    );
   }
 }
 

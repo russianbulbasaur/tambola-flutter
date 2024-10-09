@@ -76,8 +76,14 @@ class _PlayersTicketScreenState extends State<PlayersTicketScreen> {
   Widget ticketsArea(){
     return Expanded(child:
     ListView.builder(itemBuilder: (context,index){
-      return const TicketComponent();
-    },itemCount: 1,));
+      return Column(mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(height: 10.h,),
+          const TicketComponent(),
+          SizedBox(height: 10.h,)
+        ],
+      );
+    },itemCount: 10,));
   }
 
 }
