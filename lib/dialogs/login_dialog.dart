@@ -63,6 +63,10 @@ class _LoginDialogState extends State<LoginDialog> {
         Text("Login to Tambola",style: Theme.of(context).textTheme.bodySmall!.
           copyWith(fontWeight: FontWeight.w600,fontSize: 14.sp),
         textAlign: TextAlign.center,),
+          SelectableText("Use 7018118095 phone and 111111 as otp for test login",
+            style: Theme.of(context).textTheme.bodySmall!.
+          copyWith(fontWeight: FontWeight.w600,fontSize: 12.sp),
+            textAlign: TextAlign.center,),
         SizedBox(height: 30.h,),
         TextField(controller: phoneController,
         keyboardType: TextInputType.phone, textAlign: TextAlign.center,
