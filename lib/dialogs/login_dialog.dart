@@ -109,6 +109,7 @@ class _LoginDialogState extends State<LoginDialog> {
         focusNode: otpFieldFocusNodes[index],
         textAlign: TextAlign.center,
         decoration: InputDecoration(
+          counterText: "",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(6.r),
           borderSide: BorderSide(color: Colors.black,width: 1.w))
         ),));
@@ -127,7 +128,6 @@ class _LoginDialogState extends State<LoginDialog> {
             textAlign: TextAlign.center,),
           SizedBox(height: 30.h,),
           TextField(controller: nameController,
-            keyboardType: TextInputType.phone,
             textAlign: TextAlign.center,
             decoration: InputDecoration(
                 border: OutlineInputBorder(

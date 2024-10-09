@@ -64,6 +64,7 @@ class _TicketComponentState extends State<TicketComponent> {
     return GridView.builder(gridDelegate: const
     SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 9,
     childAspectRatio: 1),
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context,index){
            int col = index%9;
            int row = index~/9;
@@ -74,7 +75,7 @@ class _TicketComponentState extends State<TicketComponent> {
 
   Widget numberTile(TicketNumberTile tile,BuildContext subContext){
     String number = "";
-    if(tile.hasNumber) number = (tile.number<10)?" ${tile.number}":tile.number.toString();
+    if(tile.hasNumber) number = (tile.number<10)?"0${tile.number}":tile.number.toString();
     return InkWell(onTap: (){
       if(!tile.hasNumber) return;
       if(tile.isTicked) {
