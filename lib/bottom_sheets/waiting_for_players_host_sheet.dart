@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:html';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -71,7 +73,8 @@ class _WaitingForPlayersHostSheetState extends State<WaitingForPlayersHostSheet>
           const Spacer(),
           GestureDetector(
           onTap: (){
-            ClipboardData data = ClipboardData(text: "${Resources.httpIpPort}/game/join?code=${monitor.game.id}");
+            final host = window.location.host;
+            ClipboardData data = ClipboardData(text: "http://$host/#/game/join?code=${monitor.game.id}");
             Clipboard.setData(data);
           },child: Icon(Icons.share,color: Theme.of(context).primaryColorDark,))
         //  Icon(Icons.settings,color: Theme.of(context).primaryColorDark,)

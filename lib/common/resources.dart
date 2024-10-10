@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tambola/bottom_sheets/join_game_sheet.dart';
 import 'package:tambola/dialogs/app_dialog.dart';
+import 'package:tambola/screens/join_game_screen.dart';
 import 'package:tambola/screens/welcome_screen.dart';
 
 import '../models/user.dart';
@@ -25,10 +27,15 @@ class Resources{
   static String httpIpPort = "http://$ipPort";
 
   static Route route(RouteSettings settings){
-    switch(settings.name){
+    Uri url = Uri.parse(settings.name!);
+    switch(url.path){
       case "/":
         return MaterialPageRoute(builder:(context){
           return const WelcomeScreen();
+        });
+      case "/game/join":
+        return MaterialPageRoute(builder: (context){
+          return JoinGameScreen(code: (url.queryParameters["code"]));
         });
       default:
         return MaterialPageRoute(builder: (context){
